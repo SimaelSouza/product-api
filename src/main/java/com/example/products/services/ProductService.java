@@ -5,9 +5,10 @@ import com.example.products.dtos.ProductCreateDto;
 import com.example.products.dtos.ProductResponseDto;
 import com.example.products.dtos.ProductUpdateDto;
 import com.example.products.exceptions.ResourceNotFoundException;
+import com.example.products.mappers.ProductMapper;
 import com.example.products.models.ProductModel;
 import com.example.products.repositories.ProductsRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,24 +20,25 @@ import java.util.UUID;
 
 @Service
 public class ProductService {
-    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
-    private final ProductsRepository productsRepository;
 
-    public ProductService(ProductsRepository productsRepository) {
+    private final ProductsRepository productsRepository;
+    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
+    private final ProductMapper productMapper;
+
+    public ProductService(ProductsRepository productsRepository, ProductMapper productMapper) {
         this.productsRepository = productsRepository;
+        this.productMapper = productMapper;
     }
 
     public ProductResponseDto create (ProductCreateDto dto) {
         log.info("Criando um novo produto: nome='{}', preço={}", dto.name(), dto.price());
 
-        ProductModel productModel = new ProductModel();
-        productModel.setName(dto.name());
-        productModel.setPrice(dto.price());
+        ProductModel productModel = productMapper.toModel(dto);
 
         ProductModel saved = productsRepository.save(productModel);
 
         log.info("Produto salvo com sucesso. ID={}", saved.getId());
-        return toResponseDto(saved);
+        return productMapper.toDto(saved);
     }
 
     public ProductResponseDto findById(UUID id) {
@@ -48,15 +50,19 @@ public class ProductService {
                         return new ResourceNotFoundException("Produto não encontrado com o ID: " + id);
                 });
 
-        return toResponseDto(product);
+        return productMapper.toDto(product);
     }
 
     public PageResponseDto<ProductResponseDto> searchByName(String name, Pageable pageable) {
         log.debug("Procurando produtos por nome: '{}'", name);
 
+        if (name == null || name.isBlank()) {
+            return new PageResponseDto<>(Page.empty(pageable));
+        }
+
         Page<ProductResponseDto> page = productsRepository
                 .findByNameContainingIgnoreCase(name, pageable)
-                .map(this::toResponseDto);
+                .map(productMapper::toDto);
 
         log.debug("Busca concluida. Total: {} itens", page.getTotalElements());
         return new PageResponseDto<>(page);
@@ -65,13 +71,18 @@ public class ProductService {
     public PageResponseDto<ProductResponseDto> findByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
         log.debug("Procurando produtos por faixa de preço: {} - {}", minPrice, maxPrice);
 
+        if(minPrice == null || maxPrice == null){
+            throw new IllegalArgumentException("Valores de preço não podem ser nulos");
+        }
+
         if (minPrice.compareTo(maxPrice) > 0){
             log.warn("Faixa de preço inválida: min={} max={}", minPrice, maxPrice);
             throw new IllegalArgumentException("O valor mínimo não pode ser maior que o valor máximo");
         }
+
         Page<ProductResponseDto> page = productsRepository
                 .findByPriceBetween(minPrice, maxPrice, pageable)
-                .map(this::toResponseDto);
+                .map(productMapper::toDto);
 
         return new PageResponseDto<>(page);
     }
@@ -81,7 +92,7 @@ public class ProductService {
 
         Page<ProductResponseDto> page = productsRepository
                 .findAll(pageable)
-                .map(this::toResponseDto);
+                .map(productMapper::toDto);
 
         log.debug("Total retornado: {} itens", page.getTotalElements());
         return new PageResponseDto<>(page);
@@ -101,15 +112,12 @@ public class ProductService {
             log.warn("Nenhum campo informado para atualização. id={}", id);
             throw new IllegalArgumentException("Pelo menos um dos campos deve ser informado");
         }
-        if (dto.name() != null) {
-            product.setName(dto.name());
-        }
-        if (dto.price() != null) {
-            product.setPrice(dto.price());
-        }
+
+        productMapper.updateModelFromDto(dto, product);
 
         log.info("Produto atualizado com sucesso. Id={}", id);
-        return toResponseDto(product);
+
+        return productMapper.toDto(product);
     }
 
     @Transactional
@@ -124,13 +132,5 @@ public class ProductService {
 
         productsRepository.delete(product);
         log.info("Produto removido com sucesso. Id={}", id);
-    }
-
-    public ProductResponseDto toResponseDto(ProductModel productModel) {
-        return new ProductResponseDto (
-                productModel.getId(),
-                productModel.getName(),
-                productModel.getPrice()
-                );
     }
 }

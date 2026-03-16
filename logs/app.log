@@ -1,0 +1,97 @@
+2026-03-15 18:28:08 INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-03-15 18:28:08 INFO  com.example.products.ProductsApplication - Starting ProductsApplication using Java 17.0.18 with PID 15144 (C:\Users\Simael\OneDrive\AtividadesDeProgramação\Projetos\products\target\classes started by Simael in C:\Users\Simael\OneDrive\AtividadesDeProgramação\Projetos\products)
+2026-03-15 18:28:08 INFO  com.example.products.ProductsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-15 18:28:08 INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-15 18:28:08 INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27 ms. Found 1 JPA repository interface.
+2026-03-15 18:28:08 INFO  org.springframework.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-03-15 18:28:08 INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-03-15 18:28:08 INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2026-03-15 18:28:08 INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.18]
+2026-03-15 18:28:08 INFO  org.springframework.boot.web.context.servlet.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 741 ms
+2026-03-15 18:28:09 INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-03-15 18:28:09 INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.4.Final
+2026-03-15 18:28:09 INFO  org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA guiclass transformer
+2026-03-15 18:28:09 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-03-15 18:28:09 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@30a62a5b
+2026-03-15 18:28:09 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-03-15 18:28:09 INFO  org.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/products-api]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.2
+	Default catalog/schema: products-api/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-15 18:28:10 INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-15 18:28:10 INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-15 18:28:10 INFO  org.springframework.data.jpa.repository.query.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-15 18:28:10 WARN  org.springframework.boot.jpa.autoconfigure.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-15 18:28:10 INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-03-15 18:28:10 INFO  org.springframework.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-03-15 18:28:10 INFO  com.example.products.ProductsApplication - Started ProductsApplication in 2.959 seconds (process running for 3.413)
+2026-03-15 18:28:48 INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-15 18:28:48 INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-03-15 18:28:48 INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-03-15 18:29:16 INFO  com.example.products.services.ProductService - Removendo um produto com ID: ebe2bdcb-5049-472c-a2f6-7e0e549283bb
+2026-03-15 18:29:16 INFO  com.example.products.services.ProductService - Produto removido com sucesso. Id=ebe2bdcb-5049-472c-a2f6-7e0e549283bb
+2026-03-15 18:29:23 INFO  com.example.products.services.ProductService - Removendo um produto com ID: ebe2bdcb-5049-472c-a2f6-7e0e549283bb
+2026-03-15 18:29:23 WARN  com.example.products.services.ProductService - Produto não encontrado com ID: ebe2bdcb-5049-472c-a2f6-7e0e549283bb
+2026-03-15 18:33:11 INFO  com.example.products.services.ProductService - Criando um novo produto: nome='Teclado com LED's ', preço=300
+2026-03-15 18:33:11 INFO  com.example.products.services.ProductService - Produto salvo com sucesso. ID=db921cdc-8e8e-4a0f-8893-10c0ffeeedd4
+2026-03-15 18:37:28 WARN  org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'id': Failed to convert value of type 'java.lang.String' to required type 'java.util.UUID'; Invalid UUID string: name=tec]
+2026-03-15 18:40:00 WARN  org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'id': Failed to convert value of type 'java.lang.String' to required type 'java.util.UUID'; Invalid UUID string: name="te"]
+2026-03-15 18:42:15 WARN  org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingPathVariableException: Required URI template variable 'id' for method parameter type UUID is present but converted to null]
+2026-03-15 18:42:21 INFO  org.springframework.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-15 18:42:21 INFO  org.springframework.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-03-15 18:42:21 INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-15 18:42:21 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-03-15 18:42:21 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-03-15 18:42:27 INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-03-15 18:42:27 INFO  com.example.products.ProductsApplication - Starting ProductsApplication using Java 17.0.18 with PID 8728 (C:\Users\Simael\OneDrive\AtividadesDeProgramação\Projetos\products\target\classes started by Simael in C:\Users\Simael\OneDrive\AtividadesDeProgramação\Projetos\products)
+2026-03-15 18:42:27 INFO  com.example.products.ProductsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-15 18:42:27 INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-15 18:42:27 INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29 ms. Found 1 JPA repository interface.
+2026-03-15 18:42:28 INFO  org.springframework.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-03-15 18:42:28 INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-03-15 18:42:28 INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2026-03-15 18:42:28 INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.18]
+2026-03-15 18:42:28 INFO  org.springframework.boot.web.context.servlet.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 799 ms
+2026-03-15 18:42:28 INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-03-15 18:42:28 INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.4.Final
+2026-03-15 18:42:28 INFO  org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-15 18:42:28 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-03-15 18:42:29 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@30a62a5b
+2026-03-15 18:42:29 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-03-15 18:42:29 INFO  org.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/products-api]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.2
+	Default catalog/schema: products-api/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-15 18:42:29 INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-15 18:42:29 INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-15 18:42:29 INFO  org.springframework.data.jpa.repository.query.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-15 18:42:30 WARN  org.springframework.boot.jpa.autoconfigure.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-15 18:42:30 INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-03-15 18:42:30 INFO  org.springframework.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-03-15 18:42:30 INFO  com.example.products.ProductsApplication - Started ProductsApplication in 3.256 seconds (process running for 3.665)
+2026-03-15 18:42:33 INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-15 18:42:33 INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-03-15 18:42:33 INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-03-15 18:44:34 INFO  com.example.products.services.ProductService - Atualizando produto com ID: cdc66024-4ad2-435c-81ab-2fc10b451e9d
+2026-03-15 18:44:34 INFO  com.example.products.services.ProductService - Produto atualizado com sucesso. Id=cdc66024-4ad2-435c-81ab-2fc10b451e9d
+2026-03-15 18:59:01 INFO  org.springframework.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-15 18:59:01 INFO  org.springframework.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-03-15 18:59:01 INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-15 18:59:01 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-03-15 18:59:01 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

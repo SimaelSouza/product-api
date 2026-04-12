@@ -1,0 +1,17 @@
+# Copie para application-prod.properties e preencha os valores
+
+jwt.secret=
+jwt.expiration=
+
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.show-sql=false
+
+# Necessário para PostgreSQL
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
+
+logging.level.root=WARN

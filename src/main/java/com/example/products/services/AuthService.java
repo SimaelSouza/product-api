@@ -2,6 +2,7 @@ package com.example.products.services;
 
 import com.example.products.dtos.LoginDto;
 import com.example.products.dtos.RegisterDto;
+import com.example.products.models.Role;
 import com.example.products.models.User;
 import com.example.products.repositories.UserRepository;
 import com.example.products.security.JwtService;
@@ -47,7 +48,15 @@ public class AuthService {
         return jwtService.generateToken(userModel);
     }
 
-    public String register(RegisterDto dto) {
+    public String registerAdmin(RegisterDto dto) {
+        return createUser(dto,Role.ROLE_ADMIN);
+    }
+
+    public String registerUser(RegisterDto dto) {
+        return createUser(dto,Role.ROLE_USER);
+    }
+
+    public String createUser(RegisterDto dto, Role role) {
         log.info("Registrando usuário");
 
         if (!dto.password().equals(dto.confirmPassword())) {
@@ -66,6 +75,7 @@ public class AuthService {
         User user = new User();
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(dto.password()));
+        user.setRole(role);
 
         userRepository.save(user);
 

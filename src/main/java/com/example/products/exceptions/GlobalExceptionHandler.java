@@ -19,10 +19,6 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponseDto> handleResourceNotFound(ResourceNotFoundException ex, HttpServletRequest request) {
-        ErrorResponseDto error = new ErrorResponseDto(
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
     public ResponseEntity<ErrorResponseDto> handleResourceNotFound(
             ResourceNotFoundException ex,
             HttpServletRequest request) {
@@ -105,9 +101,23 @@ public class GlobalExceptionHandler {
         );
     }
 
+    private ResponseEntity<ErrorResponseDto> buildResponse(
+            HttpStatus status,
+            String message,
+            HttpServletRequest request,
+            Map<String, String> errors
+    ) {
+
+        ErrorResponseDto errorResponse = new ErrorResponseDto(
+                status.value(),
+                status.getReasonPhrase(),
+                message,
                 request.getRequestURI(),
                 LocalDateTime.now()
+                LocalDateTime.now(),
+                errors
         );
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+
+        return ResponseEntity.status(status).body(errorResponse);
     }
 }

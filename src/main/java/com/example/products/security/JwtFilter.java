@@ -34,7 +34,6 @@ public class JwtFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            log.debug("Authorization header ausente ou inválido");
             filterChain.doFilter(request, response);
             return;
         }
@@ -65,6 +64,17 @@ public class JwtFilter extends OncePerRequestFilter {
                     );
 
             SecurityContextHolder.getContext().setAuthentication(auth);
+        }
+
+        } catch (Exception e) {
+            log.warn("Falha na autenticação: {}", e.getMessage());
+
+            SecurityContextHolder.clearContext();
+
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"error\": \"Não autorizado\"}");
+            return;
         }
 
         filterChain.doFilter(request, response);

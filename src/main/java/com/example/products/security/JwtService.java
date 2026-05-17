@@ -1,12 +1,13 @@
 package com.example.products.security;
 
+import com.example.products.exceptions.InvalidTokenException;
+import com.example.products.exceptions.TokenExpiredException;
 import com.example.products.models.User;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.antlr.v4.runtime.Token;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,9 +44,12 @@ public class JwtService {
                     .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
-        } catch (JwtException e) {
+        } catch (ExpiredJwtException e) {
+            log.warn("Token expirado: {}", e.getMessage());
+            throw new TokenExpiredException("Token expirado");
+        }catch (JwtException e) {
             log.warn("Erro ao extrair username do token: {}", e.getMessage());
-            return null;
+            throw new InvalidTokenException("Token inválido");
         }
     }
 

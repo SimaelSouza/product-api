@@ -10,10 +10,11 @@ public record RegisterDto(
         @Email(message = "Email inválido")
         String email,
 
-        @NotBlank
+        @NotBlank(message = "A senha é obrigatória")
         @Size(min = 8, message = "A senha deve conter no mínimo 8 caracteres", max = 100)
         String password,
 
-        @NotBlank
+        @NotBlank(message = "A confirmação de senha é obrigatória")
+        @Size(min = 8, message = "A senha deve conter no mínimo 8 caracteres", max = 100)
         String confirmPassword
 ) {}

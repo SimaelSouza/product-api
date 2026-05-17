@@ -14,7 +14,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class ProductMapperTest {
+public class ProductMapperTests {
     private final ProductMapper productMapper = new ProductMapperImpl();
 
     private ProductModel buildProductModel() {

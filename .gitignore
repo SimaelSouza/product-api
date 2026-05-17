@@ -36,6 +36,9 @@ build/
 # Properties com dados sensíveis
 application-dev.properties
 application-prod.properties
+application-test.properties
+application-dev-remoto.properties
+
 
 # Logs
 *.log

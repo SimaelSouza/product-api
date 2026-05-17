@@ -113,7 +113,6 @@ public class GlobalExceptionHandler {
                 status.getReasonPhrase(),
                 message,
                 request.getRequestURI(),
-                LocalDateTime.now()
                 LocalDateTime.now(),
                 errors
         );

@@ -4,6 +4,8 @@ import com.example.products.dtos.PageResponseDto;
 import com.example.products.dtos.ProductCreateDto;
 import com.example.products.dtos.ProductResponseDto;
 import com.example.products.dtos.ProductUpdateDto;
+import com.example.products.exceptions.BadRequestException;
+import com.example.products.exceptions.InvalidPriceRangeException;
 import com.example.products.exceptions.ResourceNotFoundException;
 import com.example.products.mappers.ProductMapper;
 import com.example.products.models.ProductModel;
@@ -37,7 +39,8 @@ public class ProductService {
 
         ProductModel saved = productsRepository.save(productModel);
 
-        log.info("Produto salvo com sucesso. ID={}", saved.getId());
+        log.info("Produto salvo com sucesso. Id={}, nome={}, preço={}",
+                saved.getId(), saved.getName(), saved.getPrice());
         return productMapper.toDto(saved);
     }
 
@@ -72,12 +75,12 @@ public class ProductService {
         log.debug("Procurando produtos por faixa de preço: {} - {}", minPrice, maxPrice);
 
         if(minPrice == null || maxPrice == null){
-            throw new IllegalArgumentException("Valores de preço não podem ser nulos");
+            throw new BadRequestException("Valores de preço não podem ser nulos");
         }
 
         if (minPrice.compareTo(maxPrice) > 0){
             log.warn("Faixa de preço inválida: min={} max={}", minPrice, maxPrice);
-            throw new IllegalArgumentException("O valor mínimo não pode ser maior que o valor máximo");
+            throw new InvalidPriceRangeException("O valor mínimo não pode ser maior que o valor máximo");
         }
 
         Page<ProductResponseDto> page = productsRepository
@@ -99,7 +102,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductResponseDto update ( UUID id, ProductUpdateDto dto) {
+    public ProductResponseDto update(UUID id, ProductUpdateDto dto) {
         log.info("Atualizando produto com ID: {}", id);
 
         ProductModel product = productsRepository.findById(id)
@@ -108,14 +111,19 @@ public class ProductService {
                     return new ResourceNotFoundException("Produto não encontrado com ID: " + id);
                 });
 
-        if (dto.name() == null && dto.price() == null) {
-            log.warn("Nenhum campo informado para atualização. id={}", id);
-            throw new IllegalArgumentException("Pelo menos um dos campos deve ser informado");
+        if ((dto.name() == null || dto.name().isBlank()) && dto.price() == null) {
+            log.warn("Nenhum campo válido informado para atualização. id={}", id);
+            throw new BadRequestException("Pelo menos um campo válido deve ser informado");
+        }
+
+        if (dto.price() != null && dto.price().compareTo(BigDecimal.ZERO) < 0) {
+            throw new BadRequestException("O preço não pode ser negativo");
         }
 
         productMapper.updateModelFromDto(dto, product);
 
-        log.info("Produto atualizado com sucesso. Id={}", id);
+        log.info("Produto atualizado com sucesso. Id={}, nome={}, preço={}",
+                product.getId(), product.getName(), product.getPrice());
 
         return productMapper.toDto(product);
     }
@@ -131,6 +139,7 @@ public class ProductService {
                 });
 
         productsRepository.delete(product);
-        log.info("Produto removido com sucesso. Id={}", id);
+        log.info("Produto removido com sucesso. Id={}, nome={}, preço={}",
+                product.getId(), product.getName(), product.getPrice());
     }
 }

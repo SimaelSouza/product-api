@@ -2,6 +2,9 @@ package com.example.products.services;
 
 import com.example.products.dtos.LoginDto;
 import com.example.products.dtos.RegisterDto;
+import com.example.products.exceptions.BadRequestException;
+import com.example.products.exceptions.PasswordMismatchException;
+import com.example.products.exceptions.UserAlreadyExistsException;
 import com.example.products.models.Role;
 import com.example.products.models.User;
 import com.example.products.repositories.UserRepository;
@@ -59,18 +62,20 @@ public class AuthService {
     public String createUser(RegisterDto dto, Role role) {
         log.info("Registrando usuário");
 
-        if (!dto.password().equals(dto.confirmPassword())) {
-            throw new IllegalArgumentException("Senhas não conferem");
+        if (dto.email() == null || dto.email().isBlank()) {
+            throw new BadRequestException("Email é obrigatório");
+        }
+
+        if (dto.password() == null || dto.confirmPassword() == null ||
+                !dto.password().equals(dto.confirmPassword())) {
+            throw new PasswordMismatchException("Senhas não conferem");
         }
 
         String email = dto.email().toLowerCase().trim();
 
-        userRepository.findByEmail(email)
-                .ifPresent(u -> {
-                    throw new IllegalArgumentException("Usuário já existe");
-                });
-
-
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new UserAlreadyExistsException("Usuário já existe com email: " + email);
+        }
 
         User user = new User();
         user.setEmail(email);
@@ -79,7 +84,7 @@ public class AuthService {
 
         userRepository.save(user);
 
-        log.info("Usuário registrado com sucesso");
+        log.info("Usuário registrado com sucesso. email={}", email);
 
         return jwtService.generateToken(user);
     }
